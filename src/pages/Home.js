@@ -1,9 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Shelf from '../components/Shelf'
 import FAB from '../components/FAB'
+import * as BooksAPI from '../BooksAPI'
 
 
 class Home extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state ={
+      books: []
+    }
+  }
+
+  //get all books
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({
+        books:books
+      });
+      console.log(books);
+    })
+    
+  }
+
+
   render() {
     return (
       <div className="list-books">
@@ -11,7 +32,9 @@ class Home extends Component {
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <Shelf/>
+          <Shelf title = "Currently Reading" books = {this.state.books.filter(b => b.shelf === 'currentlyReading')}/> 
+          <Shelf title = "Want to Read" books = {this.state.books.filter(b => b.shelf === 'wantToRead')}/>
+          <Shelf title = "Read" books = {this.state.books.filter(b => b.shelf === 'read')}/>
         </div>
           <FAB/>
       </div>
