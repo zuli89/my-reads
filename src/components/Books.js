@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
-
+import Shelf from './Shelf';
+import { update } from '../BooksAPI';
 
 
 class Books extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      moveBook: (book, shelf) => {console.log(book,shelf)}
+    }
+  }
+
+  updateBook = async event => {
+    let shelf = event.target.value;
+    let book = this.props
+    let result = await update({book},shelf)
+    this.state.moveBook(book, shelf)
+    }
+  
   render() {
     return (
       <li>
@@ -16,7 +31,7 @@ class Books extends Component {
             backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`
             }}></div>
           <div className="book-shelf-changer">
-            <select onChange={this.handleChange} value = {this.props.shelf || "none"}>
+            <select onChange={this.updateBook} value = {this.props.shelf || "none"}>
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
