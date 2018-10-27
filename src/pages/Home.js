@@ -24,17 +24,26 @@ class Home extends Component {
     
   }
 
+  moveBook = (book, shelf) => { //updates book category so it can move between shleves
+    BooksAPI.update(book, shelf) //gets update method
+    .then(() => {
+      book.shelf = shelf;
+      this.setState(state => ({ //sets a new state for the books when book is updated
+        books: state.books.filter(b => b.id !== book.id).concat([book])
+      }));
+    });
+  }
 
-  render() {
+  render() { 
     return (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <Shelf title = "Currently Reading" books = {this.state.books.filter(b => b.shelf === 'currentlyReading') } moveBook={this.props.moveBook}/> 
-          <Shelf title = "Want to Read" books = {this.state.books.filter(b => b.shelf === 'wantToRead') } moveBook={this.props.moveBook}/>
-          <Shelf title = "Read" books = {this.state.books.filter(b => b.shelf === 'read')} moveBook={this.props.moveBook}/>
+          <Shelf moveBook={this.moveBook} title = "Currently Reading" books = {this.state.books.filter(b => b.shelf === 'currentlyReading') } /> 
+          <Shelf moveBook={this.moveBook} title = "Want to Read" books = {this.state.books.filter(b => b.shelf === 'wantToRead') }/>
+          <Shelf moveBook={this.moveBook} title = "Read" books = {this.state.books.filter(b => b.shelf === 'read') } />
         </div>
           <FAB/>
       </div>
