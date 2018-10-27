@@ -21,7 +21,6 @@ class Home extends Component {
       });
       console.log(books);
     })
-    
   }
 
   moveBook = (book, shelf) => { //updates book category so it can move between shleves

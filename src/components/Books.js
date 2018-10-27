@@ -12,7 +12,9 @@ class Books extends Component {
           style={{ 
             width: 128, 
             height: 193, 
-            backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`
+            backgroundImage: `url(${
+              this.props.book.imageLinks ? this.props.book.imageLinks.thumbnail : ""
+              })`
             }}></div>
           <div className="book-shelf-changer">
             <select value = {this.props.book.shelf || "none"} onChange= {(e) => 
@@ -26,7 +28,7 @@ class Books extends Component {
           </div>
         </div>
         <div className="book-title">{this.props.book.title}</div>
-        <div className="book-authors">{this.props.book.authors[0]}</div>
+        <div className="book-authors">{this.props.book.authors ? this.props.book.authors[0] : 'No author'}</div>
       </div>
     </li>
     );
