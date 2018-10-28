@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import Books from './Books'
 
 class Shelf extends Component {
@@ -19,5 +18,4 @@ class Shelf extends Component {
         );
     }
 }
-
 export default Shelf;
